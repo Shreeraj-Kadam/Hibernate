@@ -1,0 +1,16 @@
+import javax.persistence.*;
+
+@Entity
+public class Passenger {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String passengerName;
+
+    @ManyToOne
+    @JoinColumn(name = "bus_driver_id")
+    private BusDriver busDriver;
+
+    // Constructors, getters, and setters
+}

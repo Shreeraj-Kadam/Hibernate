@@ -1,0 +1,41 @@
+package edu.ty.Demo;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.mysql.cj.jdbc.Driver;
+import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
+public class Demo {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo_practice","root","root");
+		System.out.println("Connection is done");
+		String query1 = "insert into employee values(1, 'Shree','9832664323232') ";
+		
+		Statement stm = con.createStatement();
+		stm.addBatch(query1);
+//		
+		String query2 = "insert into employee values(1, 'Shree','9832664323232') ";
+		stm.addBatch(query2);
+		
+//		stm.execute(query2);
+		String query3 = "delete from employee ";
+		stm.addBatch(query3);
+		int[] result = stm.executeBatch();
+		
+		for(int i : result) {
+			System.out.println(i);
+		}
+		
+		
+		
+		
+			
+	
+		
+	
+	}
+}

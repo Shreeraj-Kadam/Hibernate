@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="MavenProjectWizardLocationPage">
+		<list key="location">
+			<item value="C:\Users\Shreeraj Kadam\hibernate-relation\One_To_One_Bidirection_Country_PrimeMinister\src\main\java\OneToOne.java"/>
+			<item value="C:\Users\Shreeraj Kadam\hibernate-relation\One_To_Many_Unidirection_Person_Patents\src\main\java\OneToManyExample.java"/>
+			<item value="C:\Users\Shreeraj Kadam\hibernate-relation\One_To_One_Unidirection_Student_StudentProfile\src\main\java\UnidirectionalOneToOneExample.java"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="MavenProjectWizardArchetypePage">
+		<item key="catalog" value="All Catalogs"/>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="Maven2ProjectWizardArchifactPage">
+		<list key="package">
+		</list>
+		<list key="groupId">
+		</list>
+		<list key="artifactId">
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+		<list key="version">
+			<item value="0.0.1-SNAPSHOT"/>
+		</list>
+	</section>
+	<section name="MavenProjectWizardArtifactPage">
+		<list key="groupId">
+			<item value="edu.ty.foodapplication"/>
+			<item value="edu.ty"/>
+		</list>
+		<list key="name">
+		</list>
+		<list key="artifactId">
+			<item value="Food_Application_Project"/>
+			<item value="Many_To_One_Bidirection_Passenger_BusDriver"/>
+			<item value="Many_To_One_Bidirection_Employees_DepartmentHead"/>
+			<item value="Many_To_One_Bidirection"/>
+			<item value="One_To_Many_Bidirection_Person_Patents"/>
+			<item value="One_To_Many_Bidirection_Parent_Children"/>
+			<item value="One_To_Many_Bidirection_Countries_Cities"/>
+			<item value="One_To_Many_Bidirection"/>
+			<item value="Practice"/>
+			<item value="OneToOne_Bidirection_Student_StudentProfile"/>
+			<item value="OneToOne_Bidirection"/>
+			<item value="One_To_One_Bidirection_SerialNumber_ElectronicDevice"/>
+			<item value="One_To_One_Bidirection_Country_PrimeMinister"/>
+			<item value="One_To_One_Bidirection_Aadhar_Person"/>
+			<item value="One_To_Many_Unidirection_Person_Patents"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+		<list key="version">
+			<item value="0.0.1-SNAPSHOT"/>
+		</list>
+	</section>
+	<section name="org.eclipse.m2e.core.pom.overview">
+	</section>
+	<section name="org.eclipse.m2e.core.pom.dependencies">
+	</section>
+</section>

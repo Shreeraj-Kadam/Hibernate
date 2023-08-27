@@ -1,0 +1,18 @@
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Student {
+	@Id
+	int id;
+	String name;
+	public Student(){
+		
+	}
+	Student(int id, String name){
+		this.id = id;
+		this.name = name;
+	}
+	
+	
+}

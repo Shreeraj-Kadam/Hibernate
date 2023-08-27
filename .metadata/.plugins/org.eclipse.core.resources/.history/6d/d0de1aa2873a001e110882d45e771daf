@@ -1,0 +1,7 @@
+package One_To_One_Uni;
+
+public class OneToOne {
+public static void main(String[] args) {
+	System.out.println("Hello");
+}
+}

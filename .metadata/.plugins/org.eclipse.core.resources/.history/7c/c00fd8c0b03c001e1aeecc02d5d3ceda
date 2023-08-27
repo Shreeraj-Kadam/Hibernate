@@ -1,0 +1,128 @@
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import java.util.*;
+public class OneToManyExample {
+	 EntityManagerFactory emf ;
+	 EntityManager em ;
+	 EntityTransaction et ;
+	 Scanner input ;
+	 
+	 OneToManyExample(){
+		 emf = Persistence.createEntityManagerFactory("onetomany_unidirection");
+		 em = emf.createEntityManager();
+		 et = em.getTransaction();
+		 input = new Scanner(System.in);
+	 }
+	
+	public void createRecords() {
+		Country country = new Country();
+		System.out.println("Enter the Country name");
+		String aName = input.nextLine();		
+		country.setName(aName);
+		
+		System.out.println("How many cities associate by  the country");
+		int mCount = input.nextInt();
+		input.nextLine();
+		 List<City> cities= addcountry(mCount,country );
+		 country.setCities(cities);
+		 
+		 
+		 et.begin();
+		 em.persist(country);
+		 et.commit();
+		
+	}
+	
+	
+
+	
+	public List<City> addcountry(int count, Country country){
+		List<City> cities = new ArrayList<City>();
+		for(int i = 0; i< count ;i++) {
+			City city = new  City();
+			System.out.println("Enter the city name");
+			String name = input.nextLine();
+			city.setName(name);
+			city.setCountry(country);
+			cities.add(city);
+			
+			}
+		return cities;
+	}
+	
+	public void retrieveData() {
+		System.out.println("Enter the country id");
+		long id = input.nextLong();
+		input.nextLine();
+		Country country = em.find(Country.class, id);
+		System.out.println("Country Name: " + country.getName());
+		for(City c : country.getCities()) {
+			System.out.println(c.getName());
+		}
+		
+	}
+	
+	public void updateData() {
+		System.out.println("Enter the country id");
+		long id = input.nextLong();
+		input.nextLine();
+		Country country = em.find(Country.class, id);
+		
+		System.out.println("Enter the Country new name");
+		String name = input.nextLine();
+		country.setName(name);
+		
+		et.begin();
+		em.merge(country);
+		et.commit();
+		
+	}
+	
+	public void removeData() {
+		System.out.println("Enter the influencer id");
+		long id = input.nextLong();
+		input.nextLine();
+		Country country = em.find(Country.class, id);
+		
+		et.begin();
+		em.remove(country);
+		et.commit();
+	}
+	public static void main(String[] args) {
+		OneToManyExample mtm = new OneToManyExample();
+		while(true) {
+			System.out.println("Enter the choice \n 1: Create \n 2: Retrieve \n 3: Update \n 4: Delete");
+			int choice = mtm.input.nextInt();
+			mtm.input.nextLine();
+			switch (choice) {
+			case 1:
+			{
+				mtm.createRecords();
+				break;
+			}
+			case 2:
+			{
+				
+				mtm.retrieveData();
+				break;
+			}
+			case 3:
+			{
+				mtm.updateData();
+				break;
+			}
+			case 4:
+			{	
+				mtm.removeData();
+			}
+				break;
+				
+			}
+		}
+
+			
+		}
+	}
+

@@ -1,0 +1,51 @@
+package edu.ty.foodapplicationproject.Controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import edu.ty.foodapplicationproject.model.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+
+
+public class FoodOrderController {
+	EntityManagerFactory emf;
+	EntityManager em;
+	EntityTransaction et;
+	Scanner input;
+	public FoodOrderController() {
+		emf = Persistence.createEntityManagerFactory("food_application_project");
+		em = emf.createEntityManager();
+		et = em.getTransaction();
+		input = new Scanner(System.in);
+	}
+	
+	public List<FoodProduct> showMenu() {
+		Query query = em.createQuery("Select m from Menu m"); 
+		List<Menu> menu =  query.getResultList();
+		Menu menu1 = null; 
+		
+		for(Menu m : menu) {
+			menu1 = m;
+		}
+		return menu1.getFoodProducts();
+	
+	}
+	
+	public void createFoodOrder() {
+		List<FoodProduct> foodProducts = new ArrayList<FoodProduct>();
+		
+		foodProducts = showMenu();
+		System.out.println("Select the item from the menu");
+		for(FoodProduct fp : foodProducts) {
+			System.out.println("Food product id: "+ fp.getId() + " " + "name: " + fp.getName() +" " + " Type: " + fp.getType()
+			+ " " + "About: " + fp.getAbout() + " " + "Availability: " + fp.getAvailability() + " " + "Price: "+ fp.getPrice() );
+		}
+		
+	}
+	
+}

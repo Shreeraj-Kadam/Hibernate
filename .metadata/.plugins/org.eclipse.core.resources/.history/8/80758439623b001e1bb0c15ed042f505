@@ -1,0 +1,12 @@
+import javax.persistence.*;
+
+@Entity
+public class BusDriver {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String driverName;
+
+    // Constructors, getters, and setters
+}

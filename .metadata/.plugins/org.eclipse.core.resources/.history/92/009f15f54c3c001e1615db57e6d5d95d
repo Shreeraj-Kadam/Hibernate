@@ -1,0 +1,22 @@
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+public class Practice {
+public static void main(String[] args) {
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory(null);
+	EntityManager em = emf.createEntityManager();
+	EntityTransaction et = em.getTransaction();
+	
+
+//	Student student = new Student(2, "Shree");
+	Student student = new Student(1,"Shreeraj");
+	et.begin();
+	em.merge(student);
+	et.commit();
+	
+//	Student student = em.find(Student.class, 1);
+	
+}
+}

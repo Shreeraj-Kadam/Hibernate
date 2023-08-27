@@ -1,0 +1,5 @@
+package edu.ty.foodapplicationproject.model;
+
+public class Menu {
+
+}

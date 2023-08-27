@@ -1,0 +1,19 @@
+package edu.ty.foodapplicationproject.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Item {
+	@Id
+	private long id;
+	private long productId;
+	private String name;
+	private String type;
+	private int quantity;
+	private double price;
+	
+	
+	
+	
+}

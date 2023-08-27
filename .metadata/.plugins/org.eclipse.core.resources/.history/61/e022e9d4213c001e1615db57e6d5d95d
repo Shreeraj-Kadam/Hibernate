@@ -1,0 +1,20 @@
+package edu.ty.Demo;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import com.mysql.cj.jdbc.Driver;
+public class Demo {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo_practice","root","root");
+		String query = "call addemployee(2, 'Mahantesh', 'Software Developer', '3456987364', 'Mahan@123')";
+		CallableStatement cs = con.prepareCall(query);
+		cs.execute();
+		System.out.println("succesfully executed");
+		
+		System.out.println("Executed");
+	}
+}

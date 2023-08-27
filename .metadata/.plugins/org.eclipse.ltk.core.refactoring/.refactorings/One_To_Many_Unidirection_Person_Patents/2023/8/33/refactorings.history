@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;One_To_Many_Unidirection_Person_Patents&apos;&#x0D;&#x0A;- Original project: &apos;One_To_Many_Unidirection_Person_Patents&apos;&#x0D;&#x0A;- Original element: &apos;OneToManyExample.java&apos;" description="Delete element" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;{OneToManyExample.java" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1692179052619" subPackages="false" version="1.0"/>
+</session>

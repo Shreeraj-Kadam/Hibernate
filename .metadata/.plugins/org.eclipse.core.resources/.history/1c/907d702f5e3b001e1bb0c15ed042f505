@@ -1,0 +1,16 @@
+import javax.persistence.*;
+
+@Entity
+public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String studentName;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_profile_id")
+    private StudentProfile studentProfile;
+
+    // Constructors, getters, and setters
+}

@@ -1,0 +1,16 @@
+import javax.persistence.*;
+
+@Entity
+public class TeamMember {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String memberName;
+
+    @ManyToOne
+    @JoinColumn(name = "team_captain_id")
+    private TeamCaptain teamCaptain;
+
+
+}

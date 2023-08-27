@@ -1,0 +1,14 @@
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
+public class Country {
+	@Id
+	private int id;
+	private  String name;
+	
+	@OneToOne
+	PrimeMinister pm;
+	
+}

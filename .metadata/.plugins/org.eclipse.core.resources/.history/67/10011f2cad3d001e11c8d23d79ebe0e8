@@ -1,0 +1,110 @@
+package edu.ty.foodapplicationproject.Controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+import edu.ty.foodapplicationproject.model.User;
+import edu.ty.foodapplicationproject.model.*;
+
+public class MenuController {
+	EntityManagerFactory emf;
+	EntityManager em;
+	EntityTransaction et;
+	Scanner input;
+	
+	public MenuController() {
+		emf = Persistence.createEntityManagerFactory("food_application_project");
+		em = emf.createEntityManager();
+		et = em.getTransaction();
+		input = new Scanner(System.in);
+	}
+	
+	public List<FoodProduct> createFoodProduct(Menu menu,int count) {
+		List<FoodProduct> foodproducts = new ArrayList<FoodProduct>();
+		for(int i = 0 ; i  < count; i++) {
+			FoodProduct foodProduct = new FoodProduct();
+			System.out.println("Enter the Food Product name");
+			 String name = input.nextLine();
+			 System.out.println("Enter the Food Product type");
+			 String type = input.nextLine();
+			 System.out.println("Enter 'about' Food Product  ");
+			 String about = input.nextLine();
+			 System.out.println("Enter the Food Product availability");
+			 String avilability = input.nextLine();
+			 System.out.println("Enter the Food Product price");
+			 double price = input.nextDouble();
+			 input.nextLine();
+			 
+			foodProduct.setName(name);
+			foodProduct.setType(type);
+			foodProduct.setAbout(about);
+			foodProduct.setAvailability(avilability);
+			foodProduct.setPrice(price);
+			foodProduct.setMenu(menu);
+			
+			foodproducts.add(foodProduct);
+		}
+		return foodproducts;
+	}
+	
+	public void createMenu(User user) {
+		Menu menu = new Menu();
+		user.setMenu(menu);
+		menu.setUser(user);
+		System.out.println("Enter how many food products you want to create for the menu");
+		int count = input.nextInt();
+		input.nextLine();
+		List<FoodProduct> foodProducts= createFoodProduct(menu, count);
+		menu.setFoodProducts(foodProducts);
+		
+		et.begin();
+		em.merge(user);
+		
+		et.commit();
+	}
+	
+	public void updateMenu() {
+		System.out.println("Enter the Food Product Id");
+		long id = input.nextLong();
+		input.nextLine();
+		FoodProduct foodproduct = em.find(FoodProduct.class, id);
+		System.out.println("Enter the Food Product new Price");
+		double price = input.nextDouble();
+		
+		foodproduct.setPrice(price);
+		et.begin();
+		em.merge(foodproduct);
+		et.commit();
+		
+	}
+	
+	public void deleteMenu(User user) {
+	    
+		System.out.println("Enter the menu id");
+		long id = input.nextLong();
+		input.nextLine();
+	    Menu menu = em.find(Menu.class, id);
+	    
+	    
+	    // Delete associated food products first
+	    List<FoodProduct> foodProducts = menu.getFoodProducts();
+	    for (FoodProduct foodProduct : foodProducts) {
+	    	et.begin();
+	        em.remove(foodProduct);
+	        et.commit();
+	    }
+	    
+	    et.begin();
+	    em.remove(menu); // Now remove the menu
+	    et.commit();
+	}
+
+
+	
+}

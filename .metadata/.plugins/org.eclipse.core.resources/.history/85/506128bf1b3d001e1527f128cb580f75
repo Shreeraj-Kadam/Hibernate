@@ -1,0 +1,36 @@
+package edu.ty.foodapplicationproject.Controller;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+import edu.ty.foodapplicationproject.model.*;
+public class UserController {
+	EntityManagerFactory emf;
+	EntityManager em;
+	EntityTransaction et;
+	public UserController() {
+		emf = Persistence.createEntityManagerFactory("food_application_project");
+		em = emf.createEntityManager();
+		et = em.getTransaction();
+	}
+	public boolean registerUser(User user) {
+		et.begin();
+		em.persist(user);
+		et.commit();
+		
+		return true;
+	}
+	
+	public boolean loginUser(long id , String name , String password) {
+		User user = em.find(User.class, id);
+		if(name.equalsIgnoreCase(user.getName())   &&  password.equalsIgnoreCase(user.getPassword()) ) {
+			return true;
+		}
+		else {
+			return false; 	
+		}
+		
+		
+	}
+}

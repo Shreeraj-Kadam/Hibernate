@@ -1,0 +1,107 @@
+import java.util.*;
+import java.util.Scanner;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Persistence;
+
+
+public class ManyToManyCrud {
+
+    private EntityManagerFactory emf;
+    private EntityManager em;
+    private EntityTransaction et;
+    private Scanner input;
+
+    public ManyToManyCrud() {
+        emf = Persistence.createEntityManagerFactory("manytomany_unidirection");
+        em = emf.createEntityManager();
+        et = em.getTransaction();
+        input = new Scanner(System.in);
+    }
+
+    public void closeEntityManager() {
+        em.close();
+        emf.close();
+    }
+
+    public void createAuthor() {
+        try {
+            et.begin();
+
+            Author author = new Author();
+            System.out.println("Enter the author name:");
+            author.setName(input.nextLine());
+
+            // Add publishers
+            List<Publisher> publishers = addPublishers();
+            author.setPublishers(publishers);
+
+            em.persist(author);
+            et.commit();
+
+            System.out.println("Author record created successfully.");
+
+        } catch (Exception e) {
+            et.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    public List<Publisher> addPublishers() {
+        List<Publisher> publishers = new ArrayList<>();
+        System.out.println("How many publishers associated with this author?");
+        int count = input.nextInt();
+        input.nextLine();
+
+        for (int i = 0; i < count; i++) {
+            Publisher publisher = new Publisher();
+            System.out.println("Enter publisher name:");
+            publisher.setName(input.nextLine());
+            publishers.add(publisher);
+        }
+        return publishers;
+    }
+
+    // Implement retrieve, update, and delete methods similar to the Actor and Movie example
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ManyToManyCrud mtmCrud = new ManyToManyCrud();
+
+        while (true) {
+            System.out.println("Enter the choice:\n1: Create Author\n2: Retrieve Author\n3: Update Author\n4: Delete Author\n5: Exit");
+            int choice = mtmCrud.input.nextInt();
+            mtmCrud.input.nextLine(); // Consume the newline character
+
+            switch (choice) {
+                case 1:
+                    mtmCrud.createAuthor();
+                    break;
+                case 2:
+                    mtmCrud.retrieveAuthor();
+                    break;
+                case 3:
+                    mtmCrud.updateAuthor();
+                    break;
+                case 4:
+                    mtmCrud.deleteAuthor();
+                    break;
+                case 5:
+                    mtmCrud.closeEntityManager();
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}

@@ -1,0 +1,39 @@
+package edu.ty.foodapplicationproject.model;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+
+@Entity
+public class Menu {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen_menu")
+	@SequenceGenerator(name = "seq_gen_menu", initialValue = 101, allocationSize = 1)
+	private long id; 
+	
+	@OneToOne
+	private User user;
+
+	@OneToMany
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+}

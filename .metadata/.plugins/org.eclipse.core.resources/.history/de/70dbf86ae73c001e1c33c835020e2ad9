@@ -1,0 +1,5 @@
+package edu.ty.foodapplicationproject.Controller;
+
+public class UserController {
+
+}

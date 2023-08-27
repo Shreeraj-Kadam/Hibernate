@@ -1,0 +1,26 @@
+package edu.ty.foodapplicationproject.model;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+
+public class FoodProduct {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen_food_order")
+	@SequenceGenerator(name = "seq_gen_food_order", allocationSize = 1, initialValue = 201)
+	private long id;
+	
+	private String name;
+	private String type;
+	private String about;
+	private String availability;
+	private double price;
+	
+	@ManyToOne
+	@JoinColumn(name = "menu_id")
+	private Menu menu;
+	
+}
