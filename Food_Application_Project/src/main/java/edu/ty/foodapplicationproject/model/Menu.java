@@ -1,0 +1,52 @@
+package edu.ty.foodapplicationproject.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+
+@Entity
+public class Menu {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen_menu")
+	@SequenceGenerator(name = "seq_gen_menu", initialValue = 101, allocationSize = 1, sequenceName = "seq_menu")
+	private long id; 
+	
+	@OneToOne
+	private User user;
+
+	public List<FoodProduct> getFoodProducts() {
+		return foodProducts;
+	}
+
+	public void setFoodProducts(List<FoodProduct> foodProducts) {
+		this.foodProducts = foodProducts;
+	}
+
+	@OneToMany(mappedBy = "menu",cascade = CascadeType.ALL)
+	List<FoodProduct> foodProducts = new ArrayList<FoodProduct>();
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+}

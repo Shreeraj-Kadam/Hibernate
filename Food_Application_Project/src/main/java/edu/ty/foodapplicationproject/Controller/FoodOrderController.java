@@ -1,0 +1,187 @@
+package edu.ty.foodapplicationproject.Controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import edu.ty.foodapplicationproject.model.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+
+
+public class FoodOrderController {
+	EntityManagerFactory emf;
+	EntityManager em;
+	EntityTransaction et;
+	Scanner input;
+	public FoodOrderController() {
+		emf = Persistence.createEntityManagerFactory("food_application_project");
+		em = emf.createEntityManager();
+		et = em.getTransaction();
+		input = new Scanner(System.in);
+	}
+	
+	public List<FoodProduct> showMenu() {
+		Query query = em.createQuery("Select m from Menu m"); 
+		List<Menu> menu =  query.getResultList();
+		Menu menu1 = null; 
+		
+		for(Menu m : menu) {
+			menu1 = m;
+		}
+		return menu1.getFoodProducts();
+	
+	}
+	
+	public List<Item> createItem(int count) {
+		List<Item> items = new ArrayList<Item>();
+		
+		for(int i = 0 ; i < count; i++) {
+			Item item = new Item();
+			System.out.println("Enter the food Product Id");
+			Long id = input.nextLong();
+			input.nextLine();
+			
+			 FoodProduct fp=em.find(FoodProduct.class, id);
+			 item.setName(fp.getName());
+			 item.setProductId(fp.getId());
+			 item.setType(fp.getType());
+			 
+			 System.out.println("Enter the food Product quantity");
+			 int quantity = input.nextInt();
+			 input.nextLine();
+			 item.setQuantity(quantity);
+			 
+			 double price = fp.getPrice() * quantity;
+			 item.setPrice(price);
+			 
+			 items.add(item);
+			
+		}
+		return items;
+	}
+	
+	public void createFoodOrder(User user ) {
+		List<FoodProduct> foodProducts = new ArrayList<FoodProduct>();
+		
+		foodProducts = showMenu();
+		System.out.println("Select the item from the menu");
+		for(FoodProduct fp : foodProducts) {
+			System.out.println("Food product id: "+ fp.getId() + " " + "name: " + fp.getName() +" " + " Type: " + fp.getType()
+			+ " " + "About: " + fp.getAbout() + " " + "Availability: " + fp.getAvailability() + " " + "Price: "+ fp.getPrice() );
+		}
+		System.out.println("Select how many items you want tp add");
+		int count =input.nextInt();
+		List<Item> items = createItem(count);
+		FoodOrder foodOrder =  new FoodOrder();
+		
+		foodOrder.setStatus("Received");
+		foodOrder.setCustomerName(user.getName());
+		
+		//total price
+		double  totalPrice = 0;
+		for(Item item : items) {
+			totalPrice += item.getPrice();
+		}
+		foodOrder.setTotalPrice(totalPrice);
+		
+		
+		//contact number left ??
+		
+		foodOrder.setUser(user);
+		et.begin();
+		em.persist(foodOrder);
+		et.commit();
+		
+		for(Item item : items) {
+			item.setFoodOrder(foodOrder);
+			et.begin();
+			em.persist(item);
+			et.commit();
+			
+		}
+		
+	}
+	
+	public void showPlacedOrder(User user) {
+		
+		Query query = em.createQuery("Select fo from FoodOrder fo"); 
+		List<FoodOrder> foodOrder =  query.getResultList();
+
+		Query query1 = em.createQuery("Select item from Item item"); 
+		List<Item> items =  query1.getResultList();
+
+		
+		for(FoodOrder fo : foodOrder) {
+			User user1 = fo.getUser();
+			if(user1.getId() == user.getId()) {
+				System.out.println("Food Order id: " + fo.getId());
+				for(Item item : items) {
+					FoodOrder fo1 = item.getFoodOrder();
+					if(fo1.getId() == fo.getId()) {
+						System.out.println("Item Id: " +  item.getId() + " ,Item Name: " + " ,Item Quantity: " + item.getQuantity());
+					}
+				}
+				
+				
+			}
+			
+		}
+
+	}
+	
+	
+	public void updateFoodOrder(User user) {
+		
+		showPlacedOrder(user);
+		System.out.println("Enter the item id you want to update ");
+		long id = input.nextLong();
+		input.nextLine();
+		
+		System.out.println("Enter the new quntity ");
+		int quantity = input.nextInt();
+		
+		Item item = em.find(Item.class, id);
+		
+		item.setQuantity(quantity);
+		double price = item.getPrice() * item.getQuantity();
+		
+		FoodOrder foodOrder = item.getFoodOrder();
+		foodOrder.setTotalPrice(price);
+		
+		
+		et.begin();
+		em.merge(item);
+		em.merge(foodOrder);
+		et.commit();
+		
+		
+	}
+	
+	public void deleteFoodOrder() {
+		System.out.println("Enter the Food Order id");
+		long id = input.nextLong();
+		input.nextLine();
+		Query query = em.createQuery("Select i from Item i"); 
+		List<Item> items =  query.getResultList();
+		for(Item item : items) {
+			FoodOrder foodOrder = item.getFoodOrder();
+			if(foodOrder.getId() == id) {
+				et.begin();
+				em.remove(item);
+				et.commit();
+			}
+		}
+		
+		FoodOrder foodOrder = em.find(FoodOrder.class, id);
+		
+		et.begin();
+		em.remove(foodOrder);
+		et.commit();
+		
+	}
+	
+}
